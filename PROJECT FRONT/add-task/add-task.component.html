@@ -1,0 +1,47 @@
+<div class="modal-panel">
+  <h2>Add a new task</h2>
+  <p class="sub">Pick a group, set the deadline, and you're done.</p>
+
+  <div class="field">
+    <label>Task title</label>
+    <div class="title-wrap">
+      <input [(ngModel)]="task.title" maxlength="120" type="text" placeholder="e.g. Study Chapter 3">
+      <span>{{ task.title.length }}/120</span>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Description & Specifications</label>
+    <textarea [(ngModel)]="task.description" placeholder="Task details"></textarea>
+  </div>
+
+  <div class="field">
+    <label>Assign to Group / Category</label>
+    <div class="chip-row">
+      <button type="button" class="chip" *ngFor="let group of groups"
+        [class.selected]="task.groupId === group.id"
+        [style.--chip-color]="group.color"
+        (click)="task.groupId = group.id">
+        <span class="dot" [style.background]="group.color"></span>{{ group.name }}
+      </button>
+    </div>
+  </div>
+
+  <div class="row-2">
+    <div class="field"><label>Start</label><input [(ngModel)]="task.start" type="datetime-local"></div>
+    <div class="field"><label>Deadline</label><input [(ngModel)]="task.end" type="datetime-local"></div>
+  </div>
+
+  <div class="field">
+    <label>Priority Level</label>
+    <div class="priority-row">
+      <button *ngFor="let p of priorities" type="button"
+        [class.selected]="task.priority === p" (click)="task.priority = p">{{ p }}</button>
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn btn-ghost" type="button" (click)="cancel.emit()">Cancel</button>
+    <button class="btn btn-primary" type="button" (click)="createTask()">Create Task</button>
+  </div>
+</div>

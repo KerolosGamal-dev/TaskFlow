@@ -1,0 +1,20 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#">
+      <img src="assets/logo.png" alt="TaskSphere" class="brand-logo">
+      <span>TaskSphere</span>
+    </a>
+
+    <div class="header-tools">
+      <div class="search-box">
+        <span>⌕</span>
+        <input type="text" placeholder="Search tasks...">
+      </div>
+      <button class="icon-btn" type="button">♧<span class="badge-dot"></span></button>
+      <button class="icon-btn" type="button" (click)="toggleTheme()">◐</button>
+      <button class="icon-btn lang-toggle" type="button" (click)="toggleLanguage()">
+        {{ language === 'en' ? 'AR' : 'EN' }}
+      </button>
+    </div>
+  </div>
+</header>
