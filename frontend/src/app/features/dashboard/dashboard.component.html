@@ -1,0 +1,170 @@
+<div class="dashboard-container">
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="welcome-content">
+      <h1 class="greeting">{{ greeting }}, {{ currentUser.name }}! <i class="bi bi-emoji-smile-fill"></i></h1>
+      <p class="date">{{ today | date:'EEEE, MMMM d, y' }}</p>
+    </div>
+    <div class="quick-actions">
+      <button routerLink="/add-task" class="btn btn-primary">
+        <i class="bi bi-plus-circle-fill"></i> Add New Task
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon total">
+        <i class="bi bi-clipboard-data-fill"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{ stats.total }}</h3>
+        <p>Total Tasks</p>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon completed">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{ stats.completed }}</h3>
+        <p>Completed</p>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon pending">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{ stats.pending }}</h3>
+        <p>Pending</p>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon overdue">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{ stats.overdue }}</h3>
+        <p>Overdue</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two Columns Layout -->
+  <div class="dashboard-columns">
+    <!-- Today's Tasks -->
+    <div class="column">
+      <div class="tasks-section">
+        <div class="section-header">
+          <h2>Today's Tasks</h2>
+          <button routerLink="/todolist" class="btn btn-text">View All <i class="bi bi-arrow-right"></i></button>
+        </div>
+
+        <div class="tasks-list" *ngIf="todayTasks.length > 0; else noTasks">
+          <div class="task-item" 
+               *ngFor="let task of todayTasks" 
+               [class.completed]="task.isCompleted">
+            <div class="task-checkbox">
+              <input type="checkbox" 
+                     [checked]="task.isCompleted" 
+                     (change)="toggleTask(task)">
+            </div>
+            
+            <div class="task-content">
+              <div class="task-header">
+                <h3 [class.completed-text]="task.isCompleted">{{ task.title }}</h3>
+                <span class="group-badge" 
+                      [style.background-color]="task.groupColor">
+                  {{ task.groupName }}
+                </span>
+              </div>
+              
+              <p class="task-description">{{ task.description }}</p>
+              
+              <div class="task-meta">
+                <span class="time">
+                  <i class="bi bi-clock"></i> {{ formatTime(task.startDate) }} - {{ formatTime(task.endDate) }}
+                </span>
+                <span class="time-left" [class.urgent]="getTimeLeft(task.endDate).includes('0h')">
+                  {{ getTimeLeft(task.endDate) }}
+                </span>
+              </div>
+            </div>
+
+            <div class="task-actions">
+              <button routerLink="/edit-task/{{ task.id }}" class="btn-icon" title="Edit">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noTasks>
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="bi bi-journal-check"></i>
+            </div>
+            <h3>No tasks for today!</h3>
+            <p>Enjoy your free time or add a new task.</p>
+            <button routerLink="/add-task" class="btn btn-primary">
+              <i class="bi bi-plus-circle-fill"></i> Add Task
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Pending Tasks & Groups -->
+    <div class="column">
+      <!-- Pending Tasks -->
+      <div class="pending-section">
+        <div class="section-header">
+          <h2>Pending Tasks</h2>
+        </div>
+        
+        <div class="pending-list" *ngIf="pendingTasks.length > 0; else noPending">
+          <div class="pending-item" *ngFor="let task of pendingTasks">
+            <div class="pending-dot" [style.background-color]="task.groupColor"></div>
+            <div class="pending-info">
+              <h4>{{ task.title }}</h4>
+              <span class="pending-time">{{ formatTime(task.endDate) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noPending>
+          <div class="empty-pending">
+            <i class="bi bi-check-circle-fill"></i>
+            <p>All tasks completed!</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Groups Overview -->
+      <div class="groups-section">
+        <div class="section-header">
+          <h2>Your Groups</h2>
+          <button routerLink="/todolist" class="btn btn-text">View All <i class="bi bi-arrow-right"></i></button>
+        </div>
+        
+        <div class="groups-grid">
+          <div class="group-card" 
+               *ngFor="let group of groups"
+               (click)="onGroupClick(group.id)">
+            <div class="group-color" [style.background-color]="group.color"></div>
+            <div class="group-info">
+              <h3>{{ group.name }}</h3>
+              <p class="task-count">{{ groupTaskCounts[group.id] || 0 }} tasks today</p>
+            </div>
+            <i class="bi bi-chevron-right group-arrow"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
