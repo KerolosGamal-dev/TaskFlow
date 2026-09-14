@@ -1,0 +1,123 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- Logo -->
+    <div class="nav-logo">
+      <a routerLink="/dashboard" class="logo-link">
+        <i class="bi bi-kanban-fill logo-icon"></i>
+        <span class="logo-text">Task Flow</span>
+      </a>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <div class="nav-links" [class.active]="isMobileMenuOpen">
+      <a routerLink="/dashboard" routerLinkActive="active-link" class="nav-link">
+        <i class="bi bi-house-door-fill link-icon"></i>
+        <span class="link-text">{{ translate('dashboard') }}</span>
+      </a>
+      <a routerLink="/todolist" routerLinkActive="active-link" class="nav-link">
+        <i class="bi bi-list-check link-icon"></i>
+        <span class="link-text">{{ translate('todolist') }}</span>
+      </a>
+      <a routerLink="/add-task" routerLinkActive="active-link" class="nav-link">
+        <i class="bi bi-plus-circle-fill link-icon"></i>
+        <span class="link-text">{{ translate('addTask') }}</span>
+      </a>
+    </div>
+
+    <!-- Search Bar (Desktop) -->
+    <div class="nav-search">
+      <div class="search-wrapper" [class.expanded]="isSearchFocused">
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+          (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()"
+          [placeholder]="translate('search')" 
+          class="search-input">
+        <button (click)="onSearch()" class="search-btn">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="nav-actions">
+      <!-- Theme Toggle -->
+      <button (click)="toggleTheme()" class="action-btn theme-btn" [title]="isDark ? 'Light Mode' : 'Dark Mode'">
+        <i class="bi" [class.bi-moon-fill]="!isDark" [class.bi-sun-fill]="isDark"></i>
+      </button>
+
+      <!-- Language Toggle -->
+      <button (click)="toggleLanguage()" class="action-btn lang-btn" title="Switch Language">
+        <i class="bi bi-globe"></i>
+        <span class="lang-text">{{ currentLang === 'en' ? 'AR' : 'EN' }}</span>
+      </button>
+
+      <!-- Notifications -->
+      <div class="dropdown-wrapper">
+        <button (click)="toggleNotifications()" class="action-btn notification-btn">
+          <i class="bi bi-bell-fill"></i>
+          <span class="notification-badge" *ngIf="getUnreadCount() > 0">
+            {{ getUnreadCount() }}
+          </span>
+        </button>
+
+        <div class="dropdown-menu notifications-dropdown" *ngIf="isNotificationsOpen">
+          <div class="dropdown-header">
+            <h4>{{ translate('notifications') }}</h4>
+          </div>
+          <div class="dropdown-content">
+            <div class="notification-item" *ngFor="let notif of notifications" [class.unread]="notif.unread">
+              <div class="notif-content">
+                <p>{{ notif.text }}</p>
+                <span class="notif-time">{{ notif.time }}</span>
+              </div>
+            </div>
+            <div class="empty-notifications" *ngIf="notifications.length === 0">
+              <p>{{ translate('noNotifications') }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile -->
+      <div class="dropdown-wrapper">
+        <button (click)="toggleProfile()" class="action-btn profile-btn">
+          <div class="profile-avatar">D</div>
+        </button>
+
+        <div class="dropdown-menu profile-dropdown" *ngIf="isProfileOpen">
+          <div class="profile-header">
+            <div class="profile-avatar large">D</div>
+            <div class="profile-info">
+              <h4>David</h4>
+              <p>david@example.com</p>
+            </div>
+          </div>
+          <div class="dropdown-content">
+            <a routerLink="/profile" class="dropdown-item">
+              <i class="bi bi-person"></i> {{ translate('profile') }}
+            </a>
+            <a routerLink="/settings" class="dropdown-item">
+              <i class="bi bi-gear"></i> {{ translate('settings') }}
+            </a>
+            <div class="dropdown-divider"></div>
+            <a routerLink="/logout" class="dropdown-item logout-item">
+              <i class="bi bi-box-arrow-right"></i> {{ translate('logout') }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button (click)="toggleMobileMenu()" class="mobile-menu-btn">
+        <span class="hamburger" [class.active]="isMobileMenuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</nav>

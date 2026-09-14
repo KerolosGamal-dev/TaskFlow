@@ -1,0 +1,85 @@
+<div class="todolist-container">
+  <!-- Header Controls -->
+  <div class="controls-section">
+    <div class="controls-left">
+      <h1>Task List</h1>
+      <input type="date" 
+             [ngModel]="selectedDate | date:'yyyy-MM-dd'" 
+             (change)="onDateChange($event)"
+             class="date-picker">
+    </div>
+
+    <div class="controls-right">
+      <select [(ngModel)]="selectedGroup" 
+              (change)="onGroupFilterChange()"
+              class="filter-select">
+        <option value="all">All Groups</option>
+        <option *ngFor="let group of groups" [value]="group.id">
+          {{ group.name }}
+        </option>
+      </select>
+
+      <button (click)="toggleViewMode()" class="view-toggle">
+        <i class="bi" [class.bi-list-ul]="viewMode === 'list'" [class.bi-grid-3x3-gap-fill]="viewMode === 'grid'"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Date Display -->
+  <div class="date-display">
+    <h2>{{ selectedDate | date:'EEEE, MMMM d, y' }}</h2>
+    <p>{{ tasks.length }} task{{ tasks.length !== 1 ? 's' : '' }} for this day</p>
+  </div>
+
+  <!-- Tasks Display -->
+  <div class="tasks-container" [class.grid-view]="viewMode === 'grid'">
+    <div class="task-card" 
+         *ngFor="let task of tasks"
+         [class.completed]="task.isCompleted">
+      
+      <div class="task-header">
+        <div class="checkbox-wrapper">
+          <input type="checkbox" 
+                 [checked]="task.isCompleted"
+                 (change)="toggleTask(task)">
+        </div>
+        
+        <div class="task-info">
+          <h3 [class.completed-text]="task.isCompleted">{{ task.title }}</h3>
+          <p>{{ task.description }}</p>
+        </div>
+
+        <span class="group-badge" 
+              [style.background-color]="task.groupColor">
+          {{ task.groupName }}
+        </span>
+      </div>
+
+      <div class="task-time">
+        <i class="bi bi-clock"></i>
+        <span>{{ formatTime(task.startDate) }} - {{ formatTime(task.endDate) }}</span>
+      </div>
+
+      <div class="task-actions">
+        <button routerLink="/edit-task/{{ task.id }}" class="btn btn-edit">
+          <i class="bi bi-pencil-fill"></i> Edit
+        </button>
+        <button (click)="deleteTask(task)" class="btn btn-delete">
+          <i class="bi bi-trash-fill"></i> Delete
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="tasks.length === 0">
+      <div class="empty-icon">
+        <i class="bi bi-inbox"></i>
+      </div>
+      <h3>No tasks found</h3>
+      <p>Try changing the filters or add a new task.</p>
+      <button routerLink="/add-task" class="btn btn-primary">
+        <i class="bi bi-plus-circle-fill"></i> Add Task
+      </button>
+    </div>
+  </div>
+</div>

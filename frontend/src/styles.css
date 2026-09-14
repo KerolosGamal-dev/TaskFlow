@@ -1,1 +1,90 @@
-/* You can add global styles to this file, and also import other style files */
+/* الوضع الفاتح (الافتراضي) - Light Mode */
+:root {
+  --primary: #009999;
+  --primary-hover: #007a7a;
+  --primary-light: rgba(0, 153, 153, 0.1);
+  --secondary: #DDDDDD;
+  --background: #FFFFFF;
+  --text: #333333;
+  --text-light: #666666;
+  --card-bg: #F5F5F5;
+  --card-bg-hover: #EEEEEE;
+  --border-color: #E0E0E0;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --input-bg: #FFFFFF;
+  --danger: #f44336;
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --navbar-bg: #E8E8E8;
+  --footer-bg: #F0F0F0;
+}
+
+/* الوضع الداكن - Dark Mode */
+[data-theme='dark'] {
+  --primary: #009999;
+  --primary-hover: #00b3b3;
+  --primary-light: rgba(0, 153, 153, 0.2);
+  --secondary: #5F5F5F;
+  --background: #1A1A1A;
+  --text: #EEEEEE;
+  --text-light: #AAAAAA;
+  --card-bg: #2A2A2A;
+  --card-bg-hover: #333333;
+  --border-color: #3A3A3A;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.5);
+  --input-bg: #333333;
+  --danger: #ff5252;
+  --success: #66BB6A;
+  --warning: #FFB74D;
+  --navbar-bg: #252525;
+  --footer-bg: #252525;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', 'Cairo', sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  outline: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
