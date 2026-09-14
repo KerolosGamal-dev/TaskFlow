@@ -1,0 +1,32 @@
+.bg-teal-subtle {
+  background-color: #e6f4f1 !important;
+}
+
+.text-teal {
+  color: #00665e !important;
+}
+
+.btn-teal {
+  background-color: #005f56 !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.btn-teal:hover {
+  background-color: #004b44 !important;
+  color: #ffffff !important;
+}
+
+.btn-teal:disabled {
+  background-color: #a3c1bd !important;
+  color: #ffffff !important;
+  opacity: 0.7;
+}
+
+.fs-7 {
+  font-size: 0.875rem;
+}
+
+.fs-8 {
+  font-size: 0.775rem;
+}
