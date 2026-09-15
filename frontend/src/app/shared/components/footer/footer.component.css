@@ -12,7 +12,7 @@
   padding: 0 1.5rem;
 }
 
-/* Top Section - أصغر وأعرض */
+/* Top Section */
 .footer-top {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;

@@ -1,0 +1,159 @@
+.modal-panel {
+  max-width: 520px;
+  margin: auto;
+  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+
+.sub {
+  color: var(--text-soft);
+  font-size: .8rem;
+  margin-bottom: 18px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+input, textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--primary);
+}
+
+textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.title-wrap {
+  position: relative;
+}
+
+.title-wrap input {
+  padding-right: 52px;
+}
+
+.title-wrap span {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  color: var(--text-faint);
+  font-size: .7rem;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.chip-row, .priority-row {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.chip, .priority-row button {
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.chip:hover, .priority-row button:hover {
+  border-color: var(--primary);
+}
+
+.chip.selected {
+  border-color: var(--chip-color);
+  background: color-mix(in srgb, var(--chip-color) 12%, var(--surface));
+  color: var(--text);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.priority-row button.selected {
+  border-color: var(--primary);
+  color: var(--text);
+  background: var(--primary-light);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-ink);
+  border: 0;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-soft);
+  border: 1.5px solid var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+@media (max-width: 560px) {
+  .row-2 {
+    grid-template-columns: 1fr;
+  }
+}

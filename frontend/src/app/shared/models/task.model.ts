@@ -8,6 +8,7 @@ export interface Task {
   groupName: string;
   groupColor: string;
   isCompleted: boolean;
+  priority: string;
   createdAt: Date;
 }
 

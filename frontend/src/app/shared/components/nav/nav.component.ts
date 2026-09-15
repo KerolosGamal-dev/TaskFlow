@@ -20,6 +20,9 @@ export class NavComponent implements OnInit, OnDestroy {
   isMobileMenuOpen = false;
   isNotificationsOpen = false;
   isProfileOpen = false;
+  
+  currentUser: any = { name: 'User', email: 'user@example.com' };
+  
   notifications = [
     { id: 1, text: 'Task "Angular Project" is due in 1 hour', time: '1h ago', unread: true },
     { id: 2, text: 'New group "Mathematics" created', time: '2h ago', unread: true },
@@ -34,6 +37,12 @@ export class NavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.themeService.isDark$.subscribe(dark => this.isDark = dark);
     this.languageService.currentLang$.subscribe(lang => this.currentLang = lang);
+    
+    // قراءة بيانات المستخدم
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      this.currentUser = JSON.parse(savedUser);
+    }
   }
 
   ngOnDestroy(): void {}

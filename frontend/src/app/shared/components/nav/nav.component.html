@@ -90,10 +90,11 @@
         <div class="dropdown-menu profile-dropdown" *ngIf="isProfileOpen">
           <div class="profile-header">
             <div class="profile-avatar large">D</div>
-            <div class="profile-info">
-              <h4>David</h4>
-              <p>david@example.com</p>
-            </div>
+              <div class="profile-info">
+                <h4>{{ currentUser.name }}</h4>
+                <p>{{ currentUser.email }}</p>
+              </div>
+              <div class="profile-avatar large">{{ currentUser.name.charAt(0).toUpperCase() }}</div>
           </div>
           <div class="dropdown-content">
             <a routerLink="/profile" class="dropdown-item">
@@ -113,9 +114,18 @@
       <!-- Mobile Menu Toggle -->
       <button (click)="toggleMobileMenu()" class="mobile-menu-btn">
         <span class="hamburger" [class.active]="isMobileMenuOpen">
-          <span></span>
-          <span></span>
-          <span></span>
+        <span class="link-text">{{ translate('dashboard') }}</span>
+        <span class="link-text">{{ translate('todolist') }}</span>
+        <span class="link-text">{{ translate('addTask') }}</span>
+
+          <input [placeholder]="translate('search')" ...>
+
+            <h4>{{ translate('notifications') }}</h4>
+            <p>{{ translate('noNotifications') }}</p>
+
+            {{ translate('profile') }}
+            {{ translate('settings') }}
+            {{ translate('logout') }}
         </span>
       </button>
     </div>
