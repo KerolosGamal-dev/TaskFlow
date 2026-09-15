@@ -61,7 +61,7 @@
       </div>
 
       <div class="task-actions">
-        <button routerLink="/edit-task/{{ task.id }}" class="btn btn-edit">
+        <button (click)="navigateToEdit(task.id)" class="btn btn-edit">
           <i class="bi bi-pencil-fill"></i> Edit
         </button>
         <button (click)="deleteTask(task)" class="btn btn-delete">

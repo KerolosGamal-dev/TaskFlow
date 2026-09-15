@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../core/services/task.service';
+import { LanguageService } from '../../core/services/language.service';
 import { Task, Group, User } from '../../shared/models/task.model';
 import { RouterLink, Router } from '@angular/router';
 
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
   groups: Group[] = [];
   today = new Date();
   greeting = '';
+  currentLang = 'en';
   
   stats = {
     total: 0,
@@ -30,6 +32,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
+    private languageService: LanguageService,
     private router: Router
   ) {}
 
@@ -41,6 +44,11 @@ export class DashboardComponent implements OnInit {
     this.setGreeting();
     this.calculateStats();
     this.calculateGroupCounts();
+    
+    this.languageService.currentLang$.subscribe(lang => {
+      this.currentLang = lang;
+      this.setGreeting();
+    });
   }
 
   getPendingTasks(): Task[] {
@@ -51,11 +59,11 @@ export class DashboardComponent implements OnInit {
   setGreeting(): void {
     const hour = new Date().getHours();
     if (hour < 12) {
-      this.greeting = 'Good Morning';
+      this.greeting = this.languageService.translate('goodMorning');
     } else if (hour < 18) {
-      this.greeting = 'Good Afternoon';
+      this.greeting = this.languageService.translate('goodAfternoon');
     } else {
-      this.greeting = 'Good Evening';
+      this.greeting = this.languageService.translate('goodEvening');
     }
   }
 
@@ -85,12 +93,12 @@ export class DashboardComponent implements OnInit {
     const end = new Date(endDate);
     const diff = end.getTime() - now.getTime();
     
-    if (diff <= 0) return 'Expired';
+    if (diff <= 0) return this.languageService.translate('expired');
     
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     
-    return `${hours}h ${minutes}m left`;
+    return `${hours}h ${minutes}m ${this.languageService.translate('left')}`;
   }
 
   formatTime(date: Date): string {
@@ -102,8 +110,18 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleTask(task: Task): void {
-    task.isCompleted = !task.isCompleted;
-    this.calculateStats();
+    this.taskService.toggleTaskCompletion(task.id);
+    this.todayTasks = this.taskService.getTodayTasks();
     this.pendingTasks = this.getPendingTasks();
+    this.calculateStats();
+    this.calculateGroupCounts();
+  }
+
+  navigateToEdit(taskId: string): void {
+    this.router.navigate(['/edit-task', taskId]);
+  }
+
+  translate(key: string): string {
+    return this.languageService.translate(key);
   }
 }

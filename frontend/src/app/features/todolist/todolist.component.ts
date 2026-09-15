@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../core/services/task.service';
 import { Task, Group } from '../../shared/models/task.model';
 import { RouterLink } from '@angular/router';
@@ -23,13 +23,13 @@ export class TodolistComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.groups = this.taskService.getGroups();
     
-    // استقبال الفلتر من الداشبورد
     this.route.queryParams.subscribe(params => {
       if (params['group']) {
         this.selectedGroup = params['group'];
@@ -88,12 +88,18 @@ export class TodolistComponent implements OnInit {
   }
 
   toggleTask(task: Task): void {
-    task.isCompleted = !task.isCompleted;
+    this.taskService.toggleTaskCompletion(task.id);
+    this.loadTasks();
+  }
+
+  navigateToEdit(taskId: string): void {
+    this.router.navigate(['/edit-task', taskId]);
   }
 
   deleteTask(task: Task): void {
     if (confirm('Are you sure you want to delete this task?')) {
-      this.tasks = this.tasks.filter(t => t.id !== task.id);
+      this.taskService.deleteTask(task.id);
+      this.loadTasks();
     }
   }
 

@@ -9,7 +9,6 @@ export class ThemeService {
   isDark$ = this.isDarkSubject.asObservable();
 
   constructor() {
-    // تحميل الوضع المحفوظ من localStorage
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       this.setDarkMode(true);

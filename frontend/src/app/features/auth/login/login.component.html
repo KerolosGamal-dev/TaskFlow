@@ -1,0 +1,99 @@
+<div class="auth-container">
+  <div class="auth-card">
+
+    <div class="auth-header">
+      <span class="auth-badge">
+        <i class="bi bi-box-arrow-in-right"></i>
+        ACCOUNT PORTAL
+      </span>
+      <a routerLink="/signup" class="auth-link">
+        Create Account
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <h2 class="auth-title">Welcome back</h2>
+    <p class="auth-subtitle">Enter your credentials to access your Task Flow workspace and projects.</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-wrapper">
+          <i class="bi bi-envelope input-icon"></i>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="email" 
+            placeholder="alex.reed@domain.com"
+            class="form-input"
+            [class.invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" 
+          />
+        </div>
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+          <div class="error-message">
+            @if (loginForm.get('email')?.errors?.['required']) { Please enter your email address. }
+            @if (loginForm.get('email')?.errors?.['email']) { Please enter a valid email address format. }
+          </div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <div class="label-row">
+          <label for="password" class="form-label">Password</label>
+          <a routerLink="/forget-password" class="forgot-link">Forgot password?</a>
+        </div>
+        <div class="input-wrapper">
+          <i class="bi bi-lock input-icon"></i>
+          <input 
+            id="password" 
+            type="password" 
+            formControlName="password" 
+            placeholder="••••••••••••"
+            class="form-input"
+            [class.invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" 
+          />
+        </div>
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+          <div class="error-message">
+            @if (loginForm.get('password')?.errors?.['required']) { Please enter your password. }
+            @if (loginForm.get('password')?.errors?.['minlength']) { Password must be at least 8 characters long. }
+          </div>
+        }
+      </div>
+
+      <!-- Remember Me -->
+      <div class="checkbox-group">
+        <input class="checkbox-input" type="checkbox" id="rememberMe" formControlName="rememberMe">
+        <label class="checkbox-label" for="rememberMe">Keep me signed in on this device</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="submit-btn" 
+        [disabled]="loginForm.invalid">
+        Sign In to Task Flow
+        <i class="bi bi-send"></i>
+      </button>
+    </form>
+
+    <!-- Footer Links -->
+    <div class="auth-footer">
+      <div>
+        Don't have an account? <a routerLink="/signup" class="auth-link-text">Sign Up</a>
+      </div>
+      <div class="footer-links">
+        <a href="#" class="footer-link">
+          <i class="bi bi-question-circle"></i>
+          Privacy Policy
+        </a>
+        <span class="separator">•</span>
+        <a href="#" class="footer-link">Terms</a>
+      </div>
+    </div>
+
+  </div>
+</div>

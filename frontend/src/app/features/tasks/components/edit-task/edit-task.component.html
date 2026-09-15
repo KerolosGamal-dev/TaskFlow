@@ -1,0 +1,44 @@
+<div class="modal-panel">
+  <h2>Edit Task</h2>
+  <p class="sub">Update any field and save your changes.</p>
+
+  <div class="field">
+    <label>Task title</label>
+    <input [(ngModel)]="task.title" maxlength="120" type="text">
+  </div>
+
+  <div class="field">
+    <label>Description</label>
+    <textarea [(ngModel)]="task.description"></textarea>
+  </div>
+
+  <div class="field">
+    <label>Group</label>
+    <div class="chip-row">
+      <button class="chip" type="button" *ngFor="let group of groups"
+        [class.selected]="task.groupId === group.id"
+        [style.--chip-color]="group.color" (click)="task.groupId = group.id">
+        <span class="dot" [style.background]="group.color"></span>{{ group.name }}
+      </button>
+    </div>
+  </div>
+
+  <div class="row-2">
+    <div class="field"><label>Start</label><input [(ngModel)]="task.start" type="datetime-local"></div>
+    <div class="field"><label>Deadline</label><input [(ngModel)]="task.end" type="datetime-local"></div>
+  </div>
+
+  <div class="field">
+    <label>Priority</label>
+    <div class="priority-row">
+      <button *ngFor="let p of priorities" type="button"
+        [class.selected]="task.priority === p" (click)="task.priority = p">{{ p }}</button>
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn btn-ghost" type="button" (click)="goBack()">Cancel</button>
+    <button class="btn btn-danger" type="button" (click)="deleteTask()">Delete</button>
+    <button class="btn btn-primary" type="button" (click)="saveChanges()">Save Changes</button>
+  </div>
+</div>

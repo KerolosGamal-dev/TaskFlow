@@ -7,7 +7,7 @@
     </div>
     <div class="quick-actions">
       <button routerLink="/add-task" class="btn btn-primary">
-        <i class="bi bi-plus-circle-fill"></i> Add New Task
+        <i class="bi bi-plus-circle-fill"></i> {{ translate('addNewTask') }}
       </button>
     </div>
   </div>
@@ -20,7 +20,7 @@
       </div>
       <div class="stat-info">
         <h3>{{ stats.total }}</h3>
-        <p>Total Tasks</p>
+        <p>{{ translate('totalTasks') }}</p>
       </div>
     </div>
     
@@ -30,7 +30,7 @@
       </div>
       <div class="stat-info">
         <h3>{{ stats.completed }}</h3>
-        <p>Completed</p>
+        <p>{{ translate('completed') }}</p>
       </div>
     </div>
     
@@ -40,7 +40,7 @@
       </div>
       <div class="stat-info">
         <h3>{{ stats.pending }}</h3>
-        <p>Pending</p>
+        <p>{{ translate('pending') }}</p>
       </div>
     </div>
     
@@ -50,7 +50,7 @@
       </div>
       <div class="stat-info">
         <h3>{{ stats.overdue }}</h3>
-        <p>Overdue</p>
+        <p>{{ translate('overdue') }}</p>
       </div>
     </div>
   </div>
@@ -61,8 +61,10 @@
     <div class="column">
       <div class="tasks-section">
         <div class="section-header">
-          <h2>Today's Tasks</h2>
-          <button routerLink="/todolist" class="btn btn-text">View All <i class="bi bi-arrow-right"></i></button>
+          <h2>{{ translate('todayTasks') }}</h2>
+          <button routerLink="/todolist" class="btn btn-text">
+            {{ translate('viewAll') }} <i class="bi bi-arrow-right"></i>
+          </button>
         </div>
 
         <div class="tasks-list" *ngIf="todayTasks.length > 0; else noTasks">
@@ -90,14 +92,14 @@
                 <span class="time">
                   <i class="bi bi-clock"></i> {{ formatTime(task.startDate) }} - {{ formatTime(task.endDate) }}
                 </span>
-                <span class="time-left" [class.urgent]="getTimeLeft(task.endDate).includes('0h')">
+                <span class="time-left" [class.urgent]="getTimeLeft(task.endDate) === translate('expired')">
                   {{ getTimeLeft(task.endDate) }}
                 </span>
               </div>
             </div>
 
             <div class="task-actions">
-              <button routerLink="/edit-task/{{ task.id }}" class="btn-icon" title="Edit">
+              <button (click)="navigateToEdit(task.id)" class="btn-icon" title="Edit">
                 <i class="bi bi-pencil-fill"></i>
               </button>
             </div>
@@ -109,10 +111,10 @@
             <div class="empty-icon">
               <i class="bi bi-journal-check"></i>
             </div>
-            <h3>No tasks for today!</h3>
-            <p>Enjoy your free time or add a new task.</p>
+            <h3>{{ translate('noTasksToday') }}</h3>
+            <p>{{ translate('enjoyFreeTime') }}</p>
             <button routerLink="/add-task" class="btn btn-primary">
-              <i class="bi bi-plus-circle-fill"></i> Add Task
+              <i class="bi bi-plus-circle-fill"></i> {{ translate('addTaskBtn') }}
             </button>
           </div>
         </ng-template>
@@ -124,7 +126,7 @@
       <!-- Pending Tasks -->
       <div class="pending-section">
         <div class="section-header">
-          <h2>Pending Tasks</h2>
+          <h2>{{ translate('pendingTasks') }}</h2>
         </div>
         
         <div class="pending-list" *ngIf="pendingTasks.length > 0; else noPending">
@@ -140,7 +142,7 @@
         <ng-template #noPending>
           <div class="empty-pending">
             <i class="bi bi-check-circle-fill"></i>
-            <p>All tasks completed!</p>
+            <p>{{ translate('allTasksCompleted') }}</p>
           </div>
         </ng-template>
       </div>
@@ -148,8 +150,10 @@
       <!-- Groups Overview -->
       <div class="groups-section">
         <div class="section-header">
-          <h2>Your Groups</h2>
-          <button routerLink="/todolist" class="btn btn-text">View All <i class="bi bi-arrow-right"></i></button>
+          <h2>{{ translate('yourGroups') }}</h2>
+          <button routerLink="/todolist" class="btn btn-text">
+            {{ translate('viewAll') }} <i class="bi bi-arrow-right"></i>
+          </button>
         </div>
         
         <div class="groups-grid">
@@ -159,7 +163,7 @@
             <div class="group-color" [style.background-color]="group.color"></div>
             <div class="group-info">
               <h3>{{ group.name }}</h3>
-              <p class="task-count">{{ groupTaskCounts[group.id] || 0 }} tasks today</p>
+              <p class="task-count">{{ groupTaskCounts[group.id] || 0 }} {{ translate('tasksToday') }}</p>
             </div>
             <i class="bi bi-chevron-right group-arrow"></i>
           </div>
