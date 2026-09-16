@@ -1,6 +1,6 @@
 const Group = require("../models/Group");
 
-// 1️⃣ GET - جلب كل الجروبات
+
 exports.getGroups = async (req, res) => {
   try {
     const groups = await Group.find();
@@ -19,7 +19,7 @@ exports.getGroups = async (req, res) => {
   }
 };
 
-// 2️⃣ GET - جلب جروب واحد بالـ ID
+
 exports.getGroupById = async (req, res) => {
   try {
     const group = await Group.findById(req.params.id);
@@ -44,12 +44,12 @@ exports.getGroupById = async (req, res) => {
   }
 };
 
-// 3️⃣ POST - إضافة جروب جديد
+
 exports.createGroup = async (req, res) => {
   try {
     const { name, color, description, user } = req.body;
 
-    // التحقق من إن الاسم موجود
+
     if (!name) {
       return res.status(400).json({
         success: false,
@@ -78,12 +78,12 @@ exports.createGroup = async (req, res) => {
   }
 };
 
-// 4️⃣ PUT - تعديل جروب
+
 exports.updateGroup = async (req, res) => {
   try {
     const group = await Group.findByIdAndUpdate(req.params.id, req.body, {
-      new: true, // يرجع النسخة المعدّلة
-      runValidators: true, // يشغل الـ validation
+      new: true,
+      runValidators: true,
     });
 
     if (!group) {
@@ -107,7 +107,7 @@ exports.updateGroup = async (req, res) => {
   }
 };
 
-// 5️⃣ DELETE - حذف جروب
+
 exports.deleteGroup = async (req, res) => {
   try {
     const group = await Group.findByIdAndDelete(req.params.id);

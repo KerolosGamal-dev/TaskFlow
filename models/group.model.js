@@ -11,7 +11,7 @@ const groupSchema = new mongoose.Schema(
     },
     color: {
       type: String,
-      default: "#3498db", // لون أزرق افتراضي
+      default: "#3498db",
       match: [
         /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
         "Please provide a valid hex color",
@@ -29,9 +29,9 @@ const groupSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // هيضيف createdAt و updatedAt أوتوماتيك
+    timestamps: true,
   },
 );
 
-// تصدير الـ Model
+
 module.exports = mongoose.model("Group", groupSchema);
