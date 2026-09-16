@@ -3,38 +3,39 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-// 1. استدعاء كل الـ Routes
-const authRoutes = require("./routes/authRoutes");
-const authRoutes = require("./ro/authRoutes");
-const groupRoutes = require("./routes/groupRoutes");
-const taskRoutes = require("./routes/task.routes"); // تأكد إن اسم الفولدر routes صغير زي ما هو مكتوب هنا
+// Routes
 
-// 2. إعداد تطبيق Express
+const groupRoutes = require("./routes/groupRoutes");
+const taskRoutes = require("./routes/task.routes");
+const userRoutes = require("./routes/user.routes");
+
+// Create Express app
 const app = express();
 
-// 3. الـ Middlewares
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// 4. تعريف الـ Routes
-app.use("/api/auth", authRoutes);
+// Routes
+
 app.use("/api/groups", groupRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/users", userRoutes);
 
-// 5. Route تجريبي للتأكد إن السيرفر شغال
+// Test route
 app.get("/", (req, res) => {
   res.send("TaskFlow Backend is running! 🚀");
 });
 
-// 6. الاتصال بقاعدة البيانات وتشغيل السيرفر
+// Port
 const PORT = process.env.PORT || 5000;
 
+// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected Successfully");
 
-    // تشغيل السيرفر فقط بعد نجاح الاتصال بالداتابيز
     app.listen(PORT, () => {
       console.log(`✅ Server is running on port ${PORT}`);
     });
