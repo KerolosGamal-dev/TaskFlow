@@ -13,6 +13,12 @@ const taskSchema = new mongoose.Schema(
       default: ""
     },
 
+    group: {
+  type: String,
+  required: true,
+  trim: true
+},
+
     status: {
       type: String,
       enum: ["pending", "in-progress", "completed"],
