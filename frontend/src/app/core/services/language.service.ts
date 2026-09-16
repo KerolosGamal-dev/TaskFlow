@@ -19,8 +19,6 @@ export class LanguageService {
       settings: 'Settings',
       profile: 'Profile',
       logout: 'Logout',
-      notifications: 'Notifications',
-      noNotifications: 'No new notifications',
       
       // Dashboard
       goodMorning: 'Good Morning',
@@ -63,9 +61,7 @@ export class LanguageService {
       settings: 'الإعدادات',
       profile: 'الملف الشخصي',
       logout: 'تسجيل الخروج',
-      notifications: 'الإشعارات',
-      noNotifications: 'لا توجد إشعارات جديدة',
-      
+
       // Dashboard
       goodMorning: 'صباح الخير',
       goodAfternoon: 'مساء الخير',

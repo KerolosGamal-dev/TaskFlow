@@ -19,14 +19,21 @@ export class EditTaskComponent implements OnInit {
 
   groups: Group[] = [];
   priorities = ['Low', 'Medium', 'High', 'Urgent'];
+  
+  colorOptions = [
+    '#009999',
+    '#4CAF50', 
+    '#FF9800', 
+    '#F44336',
+    '#9C27B0', 
+    '#2196F3', 
+    '#E91E63', 
+    '#795548'
+  ];
+
   showAddGroup = false;
   newGroupName = '';
   newGroupColor = '#009999';
-  
-  colorOptions = [
-    '#009999', '#4CAF50', '#FF9800', '#F44336',
-    '#9C27B0', '#2196F3', '#E91E63', '#795548'
-  ];
 
   task: any = {};
 

@@ -18,16 +18,9 @@ export class NavComponent implements OnInit, OnDestroy {
   searchQuery = '';
   isSearchFocused = false;
   isMobileMenuOpen = false;
-  isNotificationsOpen = false;
   isProfileOpen = false;
   
   currentUser: any = { name: 'User', email: 'user@example.com' };
-  
-  notifications = [
-    { id: 1, text: 'Task "Angular Project" is due in 1 hour', time: '1h ago', unread: true },
-    { id: 2, text: 'New group "Mathematics" created', time: '2h ago', unread: true },
-    { id: 3, text: 'Task "Gym Workout" completed', time: '5h ago', unread: false }
-  ];
 
   constructor(
     private themeService: ThemeService,
@@ -38,7 +31,6 @@ export class NavComponent implements OnInit, OnDestroy {
     this.themeService.isDark$.subscribe(dark => this.isDark = dark);
     this.languageService.currentLang$.subscribe(lang => this.currentLang = lang);
     
-    // قراءة بيانات المستخدم
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       this.currentUser = JSON.parse(savedUser);
@@ -66,15 +58,6 @@ export class NavComponent implements OnInit, OnDestroy {
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
     if (this.isMobileMenuOpen) {
-      this.isNotificationsOpen = false;
-      this.isProfileOpen = false;
-    }
-  }
-
-  toggleNotifications(): void {
-    this.isNotificationsOpen = !this.isNotificationsOpen;
-    if (this.isNotificationsOpen) {
-      this.isMobileMenuOpen = false;
       this.isProfileOpen = false;
     }
   }
@@ -83,13 +66,11 @@ export class NavComponent implements OnInit, OnDestroy {
     this.isProfileOpen = !this.isProfileOpen;
     if (this.isProfileOpen) {
       this.isMobileMenuOpen = false;
-      this.isNotificationsOpen = false;
     }
   }
 
   closeAllMenus(): void {
     this.isMobileMenuOpen = false;
-    this.isNotificationsOpen = false;
     this.isProfileOpen = false;
   }
 
@@ -107,10 +88,6 @@ export class NavComponent implements OnInit, OnDestroy {
     if (this.searchQuery.trim()) {
       console.log('Searching for:', this.searchQuery);
     }
-  }
-
-  getUnreadCount(): number {
-    return this.notifications.filter(n => n.unread).length;
   }
 
   translate(key: string): string {

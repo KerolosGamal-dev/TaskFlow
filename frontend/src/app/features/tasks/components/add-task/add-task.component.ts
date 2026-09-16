@@ -17,9 +17,6 @@ export class AddTaskComponent {
 
   groups: Group[] = [];
   priorities = ['Low', 'Medium', 'High', 'Urgent'];
-  showAddGroup = false;
-  newGroupName = '';
-  newGroupColor = '#009999';
   
   task = {
     title: '',
@@ -40,6 +37,10 @@ export class AddTaskComponent {
     '#E91E63', // Pink
     '#795548'  // Brown
   ];
+
+  showAddGroup = false;
+  newGroupName = '';
+  newGroupColor = '#009999';
 
   constructor(private taskService: TaskService) {
     this.groups = this.taskService.getGroups();

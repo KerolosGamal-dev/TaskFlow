@@ -157,3 +157,49 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Color Picker */
+.color-picker {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.color-option {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+  color: white;
+  font-size: 0.5rem;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+  border-color: var(--text);
+}
+
+.color-option.selected {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px rgba(0, 153, 153, 0.3);
+  transform: scale(1.1);
+}
+
+.color-option i {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;   
+}
