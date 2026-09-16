@@ -27,7 +27,6 @@
           <span class="dot" [style.background]="group.color"></span>{{ group.name }}
         </button>
         
-        <!-- زر إضافة جروب جديد -->
         <button type="button" class="chip add-new-chip" (click)="showAddGroup = true">
           <i class="bi bi-plus-circle-fill"></i> Add New Group
         </button>
@@ -63,9 +62,8 @@
               [class.selected]="newGroupColor === color"
               [style.background-color]="color"
               (click)="newGroupColor = color">
-              @if (newGroupColor === color) {
-                <i class="bi bi-check2"></i>
-              }
+              
+                <i class="bi bi-check2" *ngIf="newGroupColor === color"></i>
             </button>
           </div>
         </div>

@@ -24,7 +24,7 @@
       </a>
     </div>
 
-    <!-- Search Bar (Desktop) -->
+    <!-- Search Bar -->
     <div class="nav-search">
       <div class="search-wrapper" [class.expanded]="isSearchFocused">
         <input 
@@ -54,47 +54,19 @@
         <span class="lang-text">{{ currentLang === 'en' ? 'AR' : 'EN' }}</span>
       </button>
 
-      <!-- Notifications -->
-      <div class="dropdown-wrapper">
-        <button (click)="toggleNotifications()" class="action-btn notification-btn">
-          <i class="bi bi-bell-fill"></i>
-          <span class="notification-badge" *ngIf="getUnreadCount() > 0">
-            {{ getUnreadCount() }}
-          </span>
-        </button>
-
-        <div class="dropdown-menu notifications-dropdown" *ngIf="isNotificationsOpen">
-          <div class="dropdown-header">
-            <h4>{{ translate('notifications') }}</h4>
-          </div>
-          <div class="dropdown-content">
-            <div class="notification-item" *ngFor="let notif of notifications" [class.unread]="notif.unread">
-              <div class="notif-content">
-                <p>{{ notif.text }}</p>
-                <span class="notif-time">{{ notif.time }}</span>
-              </div>
-            </div>
-            <div class="empty-notifications" *ngIf="notifications.length === 0">
-              <p>{{ translate('noNotifications') }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Profile -->
       <div class="dropdown-wrapper">
         <button (click)="toggleProfile()" class="action-btn profile-btn">
-          <div class="profile-avatar">D</div>
+          <div class="profile-avatar">{{ currentUser.name.charAt(0).toUpperCase() }}</div>
         </button>
 
         <div class="dropdown-menu profile-dropdown" *ngIf="isProfileOpen">
           <div class="profile-header">
-            <div class="profile-avatar large">D</div>
-              <div class="profile-info">
-                <h4>{{ currentUser.name }}</h4>
-                <p>{{ currentUser.email }}</p>
-              </div>
-              <div class="profile-avatar large">{{ currentUser.name.charAt(0).toUpperCase() }}</div>
+            <div class="profile-avatar large">{{ currentUser.name.charAt(0).toUpperCase() }}</div>
+            <div class="profile-info">
+              <h4>{{ currentUser.name }}</h4>
+              <p>{{ currentUser.email }}</p>
+            </div>
           </div>
           <div class="dropdown-content">
             <a routerLink="/profile" class="dropdown-item">
@@ -114,18 +86,9 @@
       <!-- Mobile Menu Toggle -->
       <button (click)="toggleMobileMenu()" class="mobile-menu-btn">
         <span class="hamburger" [class.active]="isMobileMenuOpen">
-        <span class="link-text">{{ translate('dashboard') }}</span>
-        <span class="link-text">{{ translate('todolist') }}</span>
-        <span class="link-text">{{ translate('addTask') }}</span>
-
-          <input [placeholder]="translate('search')" ...>
-
-            <h4>{{ translate('notifications') }}</h4>
-            <p>{{ translate('noNotifications') }}</p>
-
-            {{ translate('profile') }}
-            {{ translate('settings') }}
-            {{ translate('logout') }}
+          <span></span>
+          <span></span>
+          <span></span>
         </span>
       </button>
     </div>
