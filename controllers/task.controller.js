@@ -3,12 +3,20 @@ const Task = require("../models/task.model");
 // CREATE
 const createTask = async (req, res) => {
   try {
-    const task = await Task.create(req.body);
+    const { title, description, groupId, status, dueDate } = req.body;
+
+    const task = await Task.create({
+      title,
+      description,
+      groupId,
+      status,
+      dueDate,
+    });
 
     res.status(201).json(task);
   } catch (error) {
-    res.status(400).json({
-      message: error.message
+    res.status(500).json({
+      message: error.message,
     });
   }
 };
@@ -21,11 +29,10 @@ const getTasks = async (req, res) => {
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({
-      message: error.message
+      message: error.message,
     });
   }
 };
-
 // READ ONE
 const getTaskById = async (req, res) => {
   try {
@@ -33,14 +40,14 @@ const getTaskById = async (req, res) => {
 
     if (!task) {
       return res.status(404).json({
-        message: "Task not found"
+        message: "Task not found",
       });
     }
 
     res.status(200).json(task);
   } catch (error) {
     res.status(400).json({
-      message: "Invalid task ID"
+      message: "Invalid task ID",
     });
   }
 };
@@ -48,25 +55,21 @@ const getTaskById = async (req, res) => {
 // UPDATE
 const updateTask = async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true
-      }
-    );
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!task) {
       return res.status(404).json({
-        message: "Task not found"
+        message: "Task not found",
       });
     }
 
     res.status(200).json(task);
   } catch (error) {
     res.status(400).json({
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -78,40 +81,16 @@ const deleteTask = async (req, res) => {
 
     if (!task) {
       return res.status(404).json({
-        message: "Task not found"
+        message: "Task not found",
       });
     }
 
     res.status(200).json({
-      message: "Task deleted successfully"
+      message: "Task deleted successfully",
     });
   } catch (error) {
     res.status(400).json({
-      message: "Invalid task ID"
-    });
-  }
-};
-
-// GET TODAY'S TASKS
-const getTodayTasks = async (req, res) => {
-  try {
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
-
-    const tasks = await Task.find({
-      dueDate: {
-        $gte: startOfDay,
-        $lte: endOfDay
-      }
-    });
-
-    res.status(200).json(tasks);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message
+      message: "Invalid task ID",
     });
   }
 };
@@ -119,13 +98,13 @@ const getTodayTasks = async (req, res) => {
 const getTasksByGroup = async (req, res) => {
   try {
     const tasks = await Task.find({
-      group: req.params.group
+      groupId: req.params.groupId,
     });
 
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -135,15 +114,15 @@ const getStatistics = async (req, res) => {
     const totalTasks = await Task.countDocuments();
 
     const pendingTasks = await Task.countDocuments({
-      status: "pending"
+      status: "pending",
     });
 
     const inProgressTasks = await Task.countDocuments({
-      status: "in-progress"
+      status: "in-progress",
     });
 
     const completedTasks = await Task.countDocuments({
-      status: "completed"
+      status: "completed",
     });
 
     const now = new Date();
@@ -157,13 +136,13 @@ const getStatistics = async (req, res) => {
     const todayTasks = await Task.countDocuments({
       dueDate: {
         $gte: startOfDay,
-        $lte: endOfDay
-      }
+        $lte: endOfDay,
+      },
     });
 
     const overdueTasks = await Task.countDocuments({
       dueDate: { $lt: startOfDay },
-      status: { $ne: "completed" }
+      status: { $ne: "completed" },
     });
 
     res.status(200).json({
@@ -172,32 +151,11 @@ const getStatistics = async (req, res) => {
       inProgressTasks,
       completedTasks,
       overdueTasks,
-      todayTasks
+      todayTasks,
     });
-
   } catch (error) {
     res.status(500).json({
-      message: error.message
-    });
-  }
-};
-
-const searchTasks = async (req, res) => {
-  try {
-    const { q } = req.query;
-
-    const tasks = await Task.find({
-      $or: [
-        { title: { $regex: q, $options: "i" } },
-        { description: { $regex: q, $options: "i" } }
-      ]
-    });
-
-    res.status(200).json(tasks);
-
-  } catch (error) {
-    res.status(500).json({
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -208,8 +166,6 @@ module.exports = {
   getTaskById,
   updateTask,
   deleteTask,
-  getTodayTasks,
   getTasksByGroup,
   getStatistics,
-  searchTasks
 };

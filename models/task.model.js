@@ -5,33 +5,33 @@ const taskSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
 
     description: {
       type: String,
-      default: ""
+      default: "",
     },
 
-    group: {
-  type: String,
-  required: true,
-  trim: true
-},
+    groupId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Group",
+      required: true,
+    },
 
     status: {
       type: String,
       enum: ["pending", "in-progress", "completed"],
-      default: "pending"
+      default: "pending",
     },
 
     dueDate: {
-      type: Date
-    }
+      type: Date,
+    },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 module.exports = mongoose.model("Task", taskSchema);
