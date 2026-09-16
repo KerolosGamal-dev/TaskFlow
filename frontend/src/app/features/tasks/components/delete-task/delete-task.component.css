@@ -1,0 +1,107 @@
+.modal-panel {
+  position: relative;
+  max-width: 430px;
+  margin: auto;
+  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.danger-label {
+  color: var(--danger);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  margin-bottom: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: var(--danger);
+}
+
+h2 {
+  margin: 0 0 5px;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.sub {
+  margin: 0 0 18px;
+  color: var(--text-soft);
+  font-size: .8rem;
+}
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.task-card strong {
+  color: var(--text);
+}
+
+.task-card span {
+  color: var(--text-soft);
+  font-size: .75rem;
+}
+
+.warning {
+  color: var(--danger);
+  font-size: .75rem;
+  margin: 12px 0 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 11px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-soft);
+  border: 1.5px solid var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-danger-solid {
+  background: var(--danger);
+  color: #fff;
+  border: 0;
+}
+
+.btn-danger-solid:hover {
+  background: #dc2626;
+}
