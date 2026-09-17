@@ -35,7 +35,7 @@ const register = async (req, res) => {
     await newUser.save();
 
 
-    // Create default groups for the new user
+   
     await Group.create([
         {
             name: "Personal",

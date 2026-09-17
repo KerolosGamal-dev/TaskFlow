@@ -1,6 +1,6 @@
 const Group = require("../models/group.model");
 
-// Get all groups for the logged-in user
+
 exports.getGroups = async (req, res) => {
   try {
     const groups = await Group.find({ user: req.userId });
@@ -19,7 +19,7 @@ exports.getGroups = async (req, res) => {
   }
 };
 
-// Get one group by ID for the logged-in user
+
 exports.getGroupById = async (req, res) => {
   try {
     const group = await Group.findOne({
@@ -47,7 +47,7 @@ exports.getGroupById = async (req, res) => {
   }
 };
 
-// Create group for the logged-in user
+
 exports.createGroup = async (req, res) => {
   try {
     const { name, color, description } = req.body;
@@ -80,7 +80,7 @@ exports.createGroup = async (req, res) => {
   }
 };
 
-// Update group for the logged-in user
+
 exports.updateGroup = async (req, res) => {
   try {
     const group = await Group.findOneAndUpdate(
@@ -116,7 +116,7 @@ exports.updateGroup = async (req, res) => {
   }
 };
 
-// Delete group for the logged-in user
+
 exports.deleteGroup = async (req, res) => {
   try {
     const group = await Group.findOneAndDelete({
