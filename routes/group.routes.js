@@ -6,7 +6,7 @@ const {
   createGroup,
   updateGroup,
   deleteGroup,
-} = require("../controllers/groupController");
+} = require("../controllers/group.controller");
 
 
 router.get("/", getGroups);
