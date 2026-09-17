@@ -1,4 +1,6 @@
+
 const User = require("../models/user.model");
+const Group = require("../models/group.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -32,6 +34,24 @@ const register = async (req, res) => {
 
     await newUser.save();
 
+
+    // Create default groups for the new user
+    await Group.create([
+        {
+            name: "Personal",
+            user: newUser._id
+        },
+        {
+            name: "Study",
+            user: newUser._id
+        },
+        {
+            name: "Work",
+            user: newUser._id
+        }
+    ]);
+
+
     res.status(201).json({
         message: "User registered successfully",
         user: {
@@ -41,7 +61,6 @@ const register = async (req, res) => {
         }
     });
 };
-
 
 
 
@@ -69,16 +88,16 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-    { userId: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
-);
+        { userId: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+    );
+
     res.status(200).json({
         message: "Login successful",
         token
     });
 };
-
 
 
 
@@ -96,6 +115,8 @@ const getProfile = async (req, res) => {
         user
     });
 };
+
+
 
 const updateProfile = async (req, res) => {
 
@@ -128,6 +149,8 @@ const updateProfile = async (req, res) => {
         }
     });
 };
+
+
 
 const changePassword = async (req, res) => {
 
@@ -170,6 +193,7 @@ const changePassword = async (req, res) => {
 };
 
 
+
 module.exports = {
     register,
     login,
@@ -177,3 +201,4 @@ module.exports = {
     updateProfile,
     changePassword
 };
+

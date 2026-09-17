@@ -24,7 +24,7 @@ const groupSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user.model",
+      ref: "User",
       required: [true, "Group must belong to a user"],
     },
   },
@@ -32,6 +32,5 @@ const groupSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
-
 
 module.exports = mongoose.model("Group", groupSchema);

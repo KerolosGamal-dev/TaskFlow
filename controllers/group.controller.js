@@ -1,9 +1,9 @@
 const Group = require("../models/group.model");
 
-
+// Get all groups for the logged-in user
 exports.getGroups = async (req, res) => {
   try {
-    const groups = await Group.find();
+    const groups = await Group.find({ user: req.userId });
 
     res.status(200).json({
       success: true,
@@ -19,10 +19,13 @@ exports.getGroups = async (req, res) => {
   }
 };
 
-
+// Get one group by ID for the logged-in user
 exports.getGroupById = async (req, res) => {
   try {
-    const group = await Group.findById(req.params.id);
+    const group = await Group.findOne({
+      _id: req.params.id,
+      user: req.userId,
+    });
 
     if (!group) {
       return res.status(404).json({
@@ -44,11 +47,10 @@ exports.getGroupById = async (req, res) => {
   }
 };
 
-
+// Create group for the logged-in user
 exports.createGroup = async (req, res) => {
   try {
-    const { name, color, description, user } = req.body;
-
+    const { name, color, description } = req.body;
 
     if (!name) {
       return res.status(400).json({
@@ -61,7 +63,7 @@ exports.createGroup = async (req, res) => {
       name,
       color,
       description,
-      user,
+      user: req.userId,
     });
 
     res.status(201).json({
@@ -78,13 +80,20 @@ exports.createGroup = async (req, res) => {
   }
 };
 
-
+// Update group for the logged-in user
 exports.updateGroup = async (req, res) => {
   try {
-    const group = await Group.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const group = await Group.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        user: req.userId,
+      },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     if (!group) {
       return res.status(404).json({
@@ -107,10 +116,13 @@ exports.updateGroup = async (req, res) => {
   }
 };
 
-
+// Delete group for the logged-in user
 exports.deleteGroup = async (req, res) => {
   try {
-    const group = await Group.findByIdAndDelete(req.params.id);
+    const group = await Group.findOneAndDelete({
+      _id: req.params.id,
+      user: req.userId,
+    });
 
     if (!group) {
       return res.status(404).json({
