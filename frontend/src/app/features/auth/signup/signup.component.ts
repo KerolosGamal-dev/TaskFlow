@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +13,7 @@ import { RouterLink, Router } from '@angular/router';
 export class SignupComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   showPassword = false;
 
@@ -22,7 +24,7 @@ export class SignupComponent {
     password: ['', [Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', [Validators.required]],
     acceptTerms: [false, [Validators.requiredTrue]]
-  }, { validators: this.passwordMatchValidator });
+  });
 
   setRole(role: string): void {
     this.signupForm.patchValue({ role });
@@ -32,20 +34,22 @@ export class SignupComponent {
     this.showPassword = !this.showPassword;
   }
 
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value;
-    const confirmPassword = control.get('confirmPassword')?.value;
-    if (password && confirmPassword && password !== confirmPassword) {
-      return { mismatch: true };
-    }
-    return null;
+  passwordMatchValidator(g: FormGroup) {
+    return g.get('password')?.value === g.get('confirmPassword')?.value
+      ? null : { mismatch: true };
   }
 
   onSubmit(): void {
     if (this.signupForm.valid) {
-      this.router.navigate(['/login']);
-    } else {
-      this.signupForm.markAllAsTouched();
+      this.authService.register(this.signupForm.value).subscribe({
+        next: (res) => {
+          console.log('Account created:', res);
+          this.router.navigate(['/auth/login']);
+        },
+        error: (err) => {
+          console.error('Signup error:', err);
+        }
+      });
     }
   }
 }
