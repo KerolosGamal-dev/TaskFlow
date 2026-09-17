@@ -1,0 +1,20 @@
+/* Color definitions */
+.text-teal { color: #0f766e !important; }
+.bg-teal-subtle { background-color: #ccfbf1 !important; }
+.fs-7 { font-size: 0.85rem !important; }
+.fs-8 { font-size: 0.75rem !important; }
+.btn-white { background-color: #ffffff !important; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+.btn-submit {
+  background-color: #046a67 !important;
+  color: #ffffff !important;
+  border: none !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-submit:disabled {
+  background-color: #cbd5e1 !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed !important;
+  opacity: 0.8;
+}

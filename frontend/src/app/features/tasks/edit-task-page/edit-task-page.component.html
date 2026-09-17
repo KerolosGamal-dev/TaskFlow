@@ -1,0 +1,10 @@
+<div class="page-overlay">
+  <div class="page-container">
+    <app-edit-task 
+      [taskId]="taskId"
+      (saved)="onSaved()" 
+      (deleted)="onDeleted()"
+      (cancel)="onCancel()">
+    </app-edit-task>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="modal-panel">
+  <div class="danger-label">DESTRUCTIVE ACTION</div>
+  <button class="close" type="button" (click)="cancel.emit()">×</button>
+  <h2>Delete Task?</h2>
+  <p class="sub">Are you sure you want to permanently delete this task?</p>
+
+  <div class="task-card">
+    <strong>{{ task?.title || 'Task' }}</strong>
+    <span>{{ task?.groupName || 'Group' }}</span>
+    <span>{{ task?.end || 'No deadline' }}</span>
+  </div>
+
+  <p class="warning">This action cannot be undone.</p>
+
+  <div class="modal-actions">
+    <button class="btn btn-ghost" type="button" (click)="cancel.emit()">Cancel, Keep Task</button>
+    <button class="btn btn-danger-solid" type="button" (click)="confirm.emit()">Yes, Delete Task</button>
+  </div>
+</div>

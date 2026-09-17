@@ -1,0 +1,12 @@
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+.bg-teal {
+  background-color: #00665e !important;
+}
+
+.form-check-input:checked {
+  background-color: #00665e;
+  border-color: #00665e;
+}

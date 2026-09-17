@@ -1,0 +1,88 @@
+<div class="modal-panel">
+  <h2>Edit Task</h2>
+  <p class="sub">Update any field and save your changes.</p>
+
+  <div class="field">
+    <label>Task title</label>
+    <input [(ngModel)]="task.title" maxlength="120" type="text">
+  </div>
+
+  <div class="field">
+    <label>Description</label>
+    <textarea [(ngModel)]="task.description"></textarea>
+  </div>
+
+  <div class="field">
+    <label>Group</label>
+    <div class="chip-row">
+      <button class="chip" type="button" *ngFor="let group of groups"
+        [class.selected]="task.groupId === group.id"
+        [style.--chip-color]="group.color" (click)="task.groupId = group.id">
+        <span class="dot" [style.background]="group.color"></span>{{ group.name }}
+      </button>
+    </div>
+  </div>
+
+  
+    @if (showAddGroup) {
+      <div class="add-group-form">
+        <div class="form-header">
+          <h4>Create New Group</h4>
+          <button type="button" class="close-btn" (click)="cancelAddGroup()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        
+        <div class="form-field">
+          <label>Group Name</label>
+          <input 
+            [(ngModel)]="newGroupName" 
+            type="text" 
+            placeholder="e.g., Mathematics, Project X"
+            maxlength="30"
+            class="form-input">
+        </div>
+        
+        <div class="form-field">
+          <label>Choose Color</label>
+          <div class="color-picker">
+            <button 
+              type="button" 
+              *ngFor="let color of colorOptions"
+              class="color-option"
+              [class.selected]="newGroupColor === color"
+              [style.background-color]="color"
+              (click)="newGroupColor = color">
+                <i class="bi bi-check2" *ngIf="newGroupColor === color"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" (click)="cancelAddGroup()">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="addNewGroup()" [disabled]="!newGroupName.trim()">
+            <i class="bi bi-check-lg"></i> Create Group
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="row-2">
+    <div class="field"><label>Start</label><input [(ngModel)]="task.start" type="datetime-local"></div>
+    <div class="field"><label>Deadline</label><input [(ngModel)]="task.end" type="datetime-local"></div>
+  </div>
+
+  <div class="field">
+    <label>Priority</label>
+    <div class="priority-row">
+      <button *ngFor="let p of priorities" type="button"
+        [class.selected]="task.priority === p" (click)="task.priority = p">{{ p }}</button>
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn btn-ghost" type="button" (click)="goBack()">Cancel</button>
+    <button class="btn btn-danger" type="button" (click)="deleteTask()">Delete</button>
+    <button class="btn btn-primary" type="button" (click)="saveChanges()">Save Changes</button>
+  </div>
